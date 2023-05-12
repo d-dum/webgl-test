@@ -76,7 +76,5 @@ const texture = new Texture("http://localhost:8080/ddd.png", manager.getContext(
 
         return true;
     });
-
-
 });
 

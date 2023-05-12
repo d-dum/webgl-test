@@ -31,7 +31,7 @@ export class Animator {
             ++this.execCount;
 
             this.animateUntil(callback, frame);
-        })
+        });
     }
 
     reset(){

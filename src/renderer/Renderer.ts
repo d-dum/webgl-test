@@ -4,6 +4,13 @@ import { Camera } from "./Camera";
 import { ShaderProgram } from "./ShaderProgram";
 import {Texture} from "./Texture";
 
+export type Color = {
+    r: number,
+    g: number,
+    b: number,
+    a: number
+};
+
 export class Renderer {
     proj: Mat4
 
@@ -11,8 +18,8 @@ export class Renderer {
         this.proj = Mat4.orthographic(-1, 1, -1, 1, 0.1, 100.0);
     }
 
-    prepare(gl: WebGLRenderingContext){
-        gl.clearColor(0.0, 0.0, 1.0, 1.0);
+    prepare(gl: WebGLRenderingContext, color: Color = {r: 0.0, g: 0.0, b: 1.0, a: 1.0}){
+        gl.clearColor(color.r, color.g, color.b, color.a);
         gl.clearDepth(1.0);
         gl.depthFunc(gl.LEQUAL);
 
