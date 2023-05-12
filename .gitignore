@@ -22,6 +22,4 @@ dist-ssr
 *.sln
 *.sw?
 build
-dist/bundle.js
-# Project exclude paths
-/dist/
+bundle.js
