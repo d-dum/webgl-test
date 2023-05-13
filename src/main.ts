@@ -7,7 +7,6 @@ import {Camera} from "./renderer/Camera";
 import {convertCoordsFromWebgl} from "./renderer/Utils";
 import {Texture} from "./renderer/Texture";
 import {Animator} from "./renderer/Animator";
-import {Mat4} from "./renderer/math/mat4";
 
 const Text = require('gl-text');
 
@@ -52,7 +51,7 @@ const linePos = [
 
 // const line = new RenderObject(manager.getContext(), new Float32Array(linePos), new Float32Array());
 
-quad.model = quad.model.scale(new Vec3(0.2, 0.5, 1));
+// quad.model = quad.model.scale(new Vec3(0.2, 0.5, 1));
 
 const text = new Text(manager.getContext());
 console.log(convertCoordsFromWebgl(0, 0, manager))
@@ -62,19 +61,43 @@ text.update({
     font: '16px Helvetica, sans-serif'
 });
 
+
+
+const button = document.querySelector("button");
+if(button == null)
+    throw new Error();
+
 const texture = new Texture("http://localhost:8080/ddd.png", manager.getContext(), () => {
     const animator = new Animator();
 
-    animator.animateUntil((delta) => {
-        const rot = Mat4.rotate(10 * delta, new Vec3(0, 0, 1));
-        quad.model = quad.model.multiply(rot);
-        renderer.prepare(manager.getContext());
-        text.render();
-        program.start();
-        renderer.render(quad, cam, program, manager.getContext(), false, 1, texture);
-        program.stop();
+    renderer.prepare(manager.getContext());
+    text.render();
+    program.start();
+    renderer.render(quad, cam, program, manager.getContext(), false, 1, texture);
+    program.stop();
 
-        return true;
-    });
+    button.onclick = () => {
+        animator.animateUntil((delta) => {
+            if(animator.getCount() === 10)
+                return false;
+
+            setTimeout(() => {
+
+
+                quad.model = quad.model.scaleBottomTopFixedUp(0.9);
+
+                renderer.prepare(manager.getContext());
+                text.render();
+                program.start();
+                renderer.render(quad, cam, program, manager.getContext(), false, 1, texture);
+                program.stop();
+            }, 200);
+
+
+            return true;
+        });
+    };
+
+    button.innerText = "Click to animate";
 });
 

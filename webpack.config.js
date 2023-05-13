@@ -2,7 +2,7 @@ const {resolve} = require("path");
 module.exports = {
     entry: './src/main.ts',
     mode: "development",
-    devtool: "inline-source-map",
+    devtool: "source-map",
     devServer: {
         static: './dist'
     },

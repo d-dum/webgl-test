@@ -105,4 +105,57 @@ export class Mat4 {
             [0, 0, 0, 1]
         ]);
     }
+
+
+    scaleBottomTopFixedUp(scaleFactor: number): Mat4 {
+        const scaleY = scaleFactor;
+        const translationY = (1 - scaleY) / 2; // Amount to translate along the y-axis
+
+        const scaleMat = new Mat4([
+            [1, 0, 0, 0],
+            [0, scaleY, 0, 0],
+            [0, 0, 1, 0],
+            [0, 0, 0, 1],
+        ]);
+        const translationMat = new Mat4([
+            [1, 0, 0, 0],
+            [0, 1, 0, 0],
+            [0, 0, 1, 0],
+            [0, translationY, 0, 1],
+        ]);
+
+        // First translate the object so that the bottom part stays in place
+        const translatedMat = Mat4.mul(this, translationMat);
+
+        // Then apply the scale transformation
+        const scaledMat = Mat4.mul(translatedMat, scaleMat);
+
+        return scaledMat;
+    }
+
+    scaleTopBottomFixedDown(scaleFactor: number): Mat4 {
+        const scaleY = scaleFactor;
+        const translationY = (1 - scaleY) / 2; // Amount to translate along the y-axis
+
+        const scaleMat = new Mat4([
+            [1, 0, 0, 0],
+            [0, scaleY, 0, 0],
+            [0, 0, 1, 0],
+            [0, 0, 0, 1],
+        ]);
+        const translationMat = new Mat4([
+            [1, 0, 0, 0],
+            [0, 1, 0, 0],
+            [0, 0, 1, 0],
+            [0, -translationY, 0, 1],
+        ]);
+
+        // First translate the object so that the bottom part stays in place
+        const translatedMat = Mat4.mul(this, translationMat);
+
+        // Then apply the scale transformation
+        const scaledMat = Mat4.mul(translatedMat, scaleMat);
+
+        return scaledMat;
+    }
 }
