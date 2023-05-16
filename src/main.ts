@@ -84,7 +84,7 @@ const texture = new Texture("http://localhost:8080/ddd.png", manager.getContext(
             setTimeout(() => {
 
 
-                quad.model = quad.model.scaleBottomTopFixedUp(0.9);
+                quad.model = quad.model.scaleUpTopFixed(1.1);
 
                 renderer.prepare(manager.getContext());
                 text.render();
