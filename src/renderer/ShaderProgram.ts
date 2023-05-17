@@ -4,6 +4,7 @@ import { Color } from "./Renderer";
 export class ShaderProgram {
     private readonly program: WebGLProgram;
     private gl: WebGLRenderingContext;
+    private isActive: boolean = false;
 
     constructor(gl: WebGLRenderingContext, simple: boolean = false, color: Color = {r: 1.0, g: 0.0, b: 0.0, a: 1.0},
         vertexSource: string | null = null, fragmentSource: string | null = null) {
@@ -91,10 +92,12 @@ export class ShaderProgram {
     }
 
     start(){
+        this.isActive = true;
         this.gl.useProgram(this.program);
     }
 
     stop(){
+        this.isActive = false;
         this.gl.useProgram(null);
     }
 
@@ -104,5 +107,9 @@ export class ShaderProgram {
 
     getUniformLocation(uniform: string) {
         return this.gl.getUniformLocation(this.program, uniform);
+    }
+
+    isProgramActive(){
+        return this.isActive;
     }
 }
