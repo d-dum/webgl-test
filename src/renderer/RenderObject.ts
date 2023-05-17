@@ -92,6 +92,16 @@ export class RenderObject {
         this.vertexCount = count;
     }
 
+    arrayOfEquals(count: number): RenderObject[] {
+        const ret: RenderObject[] = [];
+
+        for(let i = 0; i < count; i++){
+            ret.push(RenderObject.fromObject(this));
+        }
+
+        return ret;
+    }
+
     getVBO(){
         return this.positionBuffer;
     }
