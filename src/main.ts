@@ -36,6 +36,12 @@ const texCoords = [
 const quad = RenderObject.withIndexBuffer(manager.getContext(), new Float32Array(quadV), new Float32Array(), new Uint16Array(quadI));
 quad.addTexCoords(manager.getContext(), texCoords);
 
+const quad2 = RenderObject.fromObject(quad);
+
+quad2.model = quad2.model.translate(new Vec3(0, 0.5, 0));
+
+const arr = [quad, quad2];
+
 const eye = new Vec3(0, 0, 1);
 const target = new Vec3(0, 0, 0);
 const up = new Vec3(0, 1, 0);
@@ -73,30 +79,10 @@ const texture = new Texture("http://localhost:8080/ddd.png", manager.getContext(
     renderer.prepare(manager.getContext());
     text.render();
     program.start();
-    renderer.render(quad, cam, program, manager.getContext(), false, 1, texture);
+    // renderer.render(quad, cam, program, manager.getContext(), false, 1, texture);
+    renderer.renderArray(arr, cam, program, manager.getContext(), false, 1, texture);
     program.stop();
 
-    button.onclick = () => {
-        animator.animateUntil((delta) => {
-            if(animator.getCount() === 10)
-                return false;
-
-            setTimeout(() => {
-
-
-                quad.model = quad.model.scaleUpTopFixed(1.1);
-
-                renderer.prepare(manager.getContext());
-                text.render();
-                program.start();
-                renderer.render(quad, cam, program, manager.getContext(), false, 1, texture);
-                program.stop();
-            }, 200);
-
-
-            return true;
-        });
-    };
 
     button.innerText = "Click to animate";
 });

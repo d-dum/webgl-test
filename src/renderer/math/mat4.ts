@@ -198,4 +198,26 @@ export class Mat4 {
 
         return Mat4.mul(scaledMat, translationMat);
     }
+
+    getScale(): Vec3 {
+        const scaleX = Math.sqrt(
+            this.elements[0][0] * this.elements[0][0] +
+            this.elements[0][1] * this.elements[0][1] +
+            this.elements[0][2] * this.elements[0][2]
+        );
+
+        const scaleY = Math.sqrt(
+            this.elements[1][0] * this.elements[1][0] +
+            this.elements[1][1] * this.elements[1][1] +
+            this.elements[1][2] * this.elements[1][2]
+        );
+
+        const scaleZ = Math.sqrt(
+            this.elements[2][0] * this.elements[2][0] +
+            this.elements[2][1] * this.elements[2][1] +
+            this.elements[2][2] * this.elements[2][2]
+        );
+
+        return new Vec3(scaleX, scaleY, scaleZ);
+    }
 }

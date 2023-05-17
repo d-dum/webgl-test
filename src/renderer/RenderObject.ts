@@ -12,7 +12,8 @@ export class RenderObject {
     uvBuffer: WebGLBuffer | null = null;
 
     constructor(gl: WebGLRenderingContext | null, vertices: Float32Array | null,
-                colors: Float32Array | null, buf: WebGLBuffer | null = null, count: number | null = null, uvs: WebGLBuffer | null = null) {
+                colors: Float32Array | null, buf: WebGLBuffer | null = null, count: number | null = null, uvs: WebGLBuffer | null = null,
+                ind: WebGLBuffer | null = null) {
 
         if(gl === null || vertices === null || colors === null){
             if(buf === null || count === null)
@@ -20,6 +21,7 @@ export class RenderObject {
             this.positionBuffer = buf;
             this.vertexCount = count;
             this.uvBuffer = uvs;
+            this.indexBuffer = ind;
             return;
         }
 
@@ -83,7 +85,7 @@ export class RenderObject {
     }
 
     static fromObject(o: RenderObject): RenderObject {
-        return new RenderObject(null, null, null, o.getVBO(), o.getVertexCount(), o.uvBuffer);
+        return new RenderObject(null, null, null, o.getVBO(), o.getVertexCount(), o.uvBuffer, o.indexBuffer);
     }
 
     setVertexCount(count: number){
