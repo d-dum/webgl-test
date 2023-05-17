@@ -6,13 +6,13 @@ import { Vec3 } from "./renderer/math/vec3";
 import {Camera} from "./renderer/Camera";
 import {convertCoordsFromWebgl} from "./renderer/Utils";
 import {Texture} from "./renderer/Texture";
-import {Animator} from "./renderer/Animator";
+// import {Animator} from "./renderer/Animator";
 
 const Text = require('gl-text');
 
 
 const manager = new ContextManager(640, 480);
-const vertices = [1.0, 1.0, -1.0, 1.0, 1.0, -1.0, -1.0, -1.0];
+// const vertices = [1.0, 1.0, -1.0, 1.0, 1.0, -1.0, -1.0, -1.0];
 
 const quadV = [
     -0.5, 0.5,
@@ -50,10 +50,10 @@ const cam = new Camera(eye, target, up, "uViewMatrix");
 const program = new ShaderProgram(manager.getContext());
 const renderer = new Renderer();
 
-const linePos = [
-    0, 0,
-    1, 0,
-];
+// const linePos = [
+//     0, 0,
+//     1, 0,
+// ];
 
 // const line = new RenderObject(manager.getContext(), new Float32Array(linePos), new Float32Array());
 
@@ -74,7 +74,7 @@ if(button == null)
     throw new Error();
 
 const texture = new Texture("http://localhost:8080/ddd.png", manager.getContext(), () => {
-    const animator = new Animator();
+    // const animator = new Animator();
 
     renderer.prepare(manager.getContext());
     text.render();
