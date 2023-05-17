@@ -3,8 +3,7 @@ import {Vec3} from "./math/vec3";
 
 export class RenderObject {
     private readonly positionBuffer: WebGLBuffer;
-    // @ts-ignore
-    private _colors: Float32Array;
+    private _colors: Float32Array | null = null;
     private vertexCount: number;
     public indexBuffer: WebGLBuffer | null = null;
     model = Mat4.identity();
