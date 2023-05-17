@@ -1,10 +1,12 @@
 
+import { Color } from "./Renderer";
+
 export class ShaderProgram {
     private readonly program: WebGLProgram;
     private gl: WebGLRenderingContext;
 
-    constructor(gl: WebGLRenderingContext) {
-        const vSource: string = `
+    constructor(gl: WebGLRenderingContext, simple: boolean = false, color: Color = {r: 1.0, g: 0.0, b: 0.0, a: 1.0}) {
+        const vSource: string = simple ? `
             attribute vec4 aVertexPosition;
             attribute vec2 uv_coords;
             
@@ -18,10 +20,20 @@ export class ShaderProgram {
                 uv = uv_coords;
                 gl_Position = uProjectionMatrix * uViewMatrix * uModelMatrix * aVertexPosition;
             }
+        ` : `
+            attribute vec4 aVertexPosition;
+            
+            uniform mat4 uModelMatrix;
+            uniform mat4 uProjectionMatrix;
+            uniform mat4 uViewMatrix;
+            
+            void main(){
+                gl_Position = uProjectionMatrix * uViewMatrix * uModelMatrix * aVertexPosition;
+            }
         `;
 
 
-        const fsSource: string = `
+        const fsSource: string = simple ? `
             precision mediump float;
 
             varying vec2 uv;
@@ -31,7 +43,13 @@ export class ShaderProgram {
                 gl_FragColor = texture2D(uTexture, uv);
             }
 
-         `;
+         ` : `
+            precision mediump float;
+
+            void main(){
+                gl_FragColor = vec4(${color.r}, ${color.g}, ${color.b}, ${color.a});
+            }
+        `;
 
         this.program = this.initShaderProgram(gl, vSource, fsSource);
         this.gl = gl;
