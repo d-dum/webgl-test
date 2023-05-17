@@ -5,7 +5,9 @@ export class ShaderProgram {
     private readonly program: WebGLProgram;
     private gl: WebGLRenderingContext;
 
-    constructor(gl: WebGLRenderingContext, simple: boolean = false, color: Color = {r: 1.0, g: 0.0, b: 0.0, a: 1.0}) {
+    constructor(gl: WebGLRenderingContext, simple: boolean = false, color: Color = {r: 1.0, g: 0.0, b: 0.0, a: 1.0},
+        vertexSource: string | null = null, fragmentSource: string | null = null) {
+
         const vSource: string = simple ? `
             attribute vec4 aVertexPosition;
             attribute vec2 uv_coords;
@@ -51,7 +53,9 @@ export class ShaderProgram {
             }
         `;
 
-        this.program = this.initShaderProgram(gl, vSource, fsSource);
+        this.program = this.initShaderProgram(gl,
+            vertexSource !== null? vertexSource : vSource,
+            fragmentSource !== null? fragmentSource : fsSource);
         this.gl = gl;
     }
 
