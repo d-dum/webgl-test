@@ -9,7 +9,7 @@ export class ShaderProgram {
     constructor(gl: WebGLRenderingContext, simple: boolean = false, color: Color = {r: 1.0, g: 0.0, b: 0.0, a: 1.0},
         vertexSource: string | null = null, fragmentSource: string | null = null) {
 
-        const vSource: string = simple ? `
+        const vSource: string = !simple ? `
             attribute vec4 aVertexPosition;
             attribute vec2 uv_coords;
             
@@ -36,7 +36,7 @@ export class ShaderProgram {
         `;
 
 
-        const fsSource: string = simple ? `
+        const fsSource: string = !simple ? `
             precision mediump float;
 
             varying vec2 uv;
