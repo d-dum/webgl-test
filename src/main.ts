@@ -73,7 +73,7 @@ const button = document.querySelector("button");
 if(button == null)
     throw new Error();
 
-const texture = new Texture("http://localhost:8080/ddd.png", manager.getContext(), () => {
+const texture = Texture.loadSync("http://localhost:8080/ddd.png", manager.getContext(), () => {
     // const animator = new Animator();
 
     renderer.prepare(manager.getContext());
