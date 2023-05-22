@@ -79,9 +79,7 @@ export class RenderObject {
         this.model = this.model.scale(new Vec3(x, y, 1));
     }
 
-    getScale(){
-        return new Float32Array(this.scaleVal);
-    }
+    
 
     static fromObject(o: RenderObject): RenderObject {
         return new RenderObject(null, null, null, o.getVBO(), o.getVertexCount(), o.uvBuffer, o.indexBuffer);
@@ -107,5 +105,13 @@ export class RenderObject {
 
     getVertexCount(){
         return this.vertexCount;
+    }
+
+    getScale(){
+        return this.model.getScale();
+    }
+
+    getTranslation(){
+        return this.model.getTranslation();
     }
 }

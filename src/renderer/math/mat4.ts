@@ -220,4 +220,12 @@ export class Mat4 {
 
         return new Vec3(scaleX, scaleY, scaleZ);
     }
+
+    getTranslation(): Vec3 {
+        return new Vec3(
+            this.elements[0][3],
+            this.elements[1][3],
+            this.elements[2][3]
+        );
+    }
 }
