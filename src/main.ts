@@ -38,7 +38,8 @@ quad.addTexCoords(manager.getContext(), texCoords);
 
 const quad2 = RenderObject.fromObject(quad);
 
-quad2.model = quad2.model.translate(new Vec3(0, 0.5, 0));
+quad2.model = quad2.model.translate(new Vec3(0, 1.4, 0));
+quad2.model = quad2.model.scale(new Vec3(0.3, 1, 1));
 
 const arr = [quad, quad2];
 
@@ -73,7 +74,7 @@ const button = document.querySelector("button");
 if(button == null)
     throw new Error();
 
-const texture = Texture.loadSync("http://localhost:8080/ddd.png", manager.getContext(), () => {
+const texture = Texture.loadSync("http://localhost:8080/red.png", manager.getContext(), () => {
     // const animator = new Animator();
 
     renderer.prepare(manager.getContext());
