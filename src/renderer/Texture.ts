@@ -9,7 +9,7 @@ export class Texture {
         return (value & (value - 1)) === 0;
     }
 
-    static async loadAsync(src: string, gl: WebGLRenderingContext): Promise<Texture> {
+    static loadAsync(src: string, gl: WebGLRenderingContext): Promise<Texture> {
         return new Promise<Texture>((resolve, reject) => {
             const texture = gl.createTexture();
 
