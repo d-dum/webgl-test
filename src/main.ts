@@ -35,11 +35,17 @@ const texCoords = [
 
 const quad = RenderObject.withIndexBuffer(manager.getContext(), new Float32Array(quadV), new Float32Array(), new Uint16Array(quadI));
 quad.addTexCoords(manager.getContext(), texCoords);
+quad.model = quad.model.scale(new Vec3(0.3, 1, 1));
 
 const quad2 = RenderObject.fromObject(quad);
 
 quad2.model = quad2.model.translate(new Vec3(0, 1.4, 0));
 quad2.model = quad2.model.scale(new Vec3(0.3, 1, 1));
+
+
+const quadGreen = [RenderObject.fromObject(quad)];
+quadGreen[0].model = quadGreen[0].model.translate(new Vec3(5, 0, 0)).scale(new Vec3(0.3, 1, 1));
+
 
 const arr = [quad, quad2];
 
@@ -74,17 +80,22 @@ const button = document.querySelector("button");
 if(button == null)
     throw new Error();
 
-const texture = Texture.loadSync("http://localhost:8080/red.png", manager.getContext(), () => {
-    // const animator = new Animator();
+
+async function main(){
+    const texture = await Texture.loadAsync("http://localhost:8080/red.png", manager.getContext());
+    const mp = new Map<Texture, RenderObject[]>();
+    mp.set(texture, arr);
+
+    const green = await Texture.loadAsync("http://localhost:8080/green.png", manager.getContext());
+    mp.set(green, quadGreen);
 
     renderer.prepare(manager.getContext());
     text.render();
     program.start();
-    // renderer.render(quad, cam, program, manager.getContext(), false, 1, texture);
-    renderer.renderArray(arr, cam, program, manager.getContext(), false, 1, texture);
+    renderer.renderMap(mp, cam, program, manager.getContext(), false, 1);
     program.stop();
 
+}
 
-    button.innerText = "Click to animate";
-});
+main().catch(err => console.error(err));
 
