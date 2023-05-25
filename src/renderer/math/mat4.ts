@@ -1,7 +1,11 @@
 import {Vec3} from "./vec3";
 
 export class Mat4 {
-    constructor(public elements: number[][]) {}
+    rawData: Float32Array;
+
+    constructor(public elements: number[][]) {
+        this.rawData = this.raw();
+    }
 
     static identity(): Mat4 {
         return new Mat4([
@@ -30,7 +34,7 @@ export class Mat4 {
         return Mat4.mul(this, other);
     }
 
-    static orthographic(left: number, right: number, bottom: number, top: number, near: number, far: number){
+    static orthographic(left: number, right: number, bottom: number, top: number, near: number, far: number): Mat4 {
         const width = right - left;
         const height = top - bottom;
         const depth = far - near;
